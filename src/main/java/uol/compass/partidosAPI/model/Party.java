@@ -27,4 +27,6 @@ public class Party {
 	@OneToMany(mappedBy = "party")
 	private List<Associate> associates;
 
+	public Party(String name, String acronym, Ideology ideology, Date foundationDate) {
+	}
 }

@@ -37,7 +37,7 @@ public class PartyController {
 	ModelMapper mapper;
 
 	@PostMapping
-	public ResponseEntity<PartyDto> save(@RequestBody @Valid PartyFormDto body) {
+	public ResponseEntity<PartyDto> save(@RequestBody PartyDto body) {
 		PartyDto party = this.partyService.save(body);
 		return ResponseEntity.status(HttpStatus.CREATED).body(party);
 	}

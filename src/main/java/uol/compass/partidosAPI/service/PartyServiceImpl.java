@@ -25,7 +25,7 @@ public class PartyServiceImpl implements PartyService {
 	private ModelMapper mapper;
 	
 	@Override
-	public PartyDto save(PartyFormDto body) {
+	public PartyDto save(PartyDto body) {
 		Party party = this.partyRepository.save(mapper.map(body, Party.class));
 		return mapper.map(party, PartyDto.class);
 	}
@@ -71,7 +71,11 @@ public class PartyServiceImpl implements PartyService {
 			throw new BusinessException(409, "CONFLICT", "Delete associate from the party");
 		}
 	}
-	
-	
-	
+
+	@Override
+	public Party findById(Long id) {
+		return null;
+	}
+
+
 }

@@ -4,11 +4,12 @@ import uol.compass.partidosAPI.model.constants.Ideology;
 import uol.compass.partidosAPI.model.Associate;
 import lombok.Data;
 
+import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class PartyDto {
+public class PartyDto{
 
 	private Long id;
 	private String name;
@@ -16,5 +17,8 @@ public class PartyDto {
 	private Ideology ideology;
 	private Date foundationDate;
 	private List<Associate> associates;
-	
+
+	public PartyDto(String name, String acronym, Ideology ideology, Date foundationDate) {
+
+	}
 }
