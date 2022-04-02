@@ -4,6 +4,7 @@ import uol.compass.partidosAPI.model.constants.Ideology;
 import uol.compass.partidosAPI.model.Associate;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,7 +14,7 @@ public class PartyDto {
 	private String name;
 	private String acronym;
 	private Ideology ideology;
-	private int foundationDate;
+	private Date foundationDate;
 	private List<Associate> associates;
 	
 }

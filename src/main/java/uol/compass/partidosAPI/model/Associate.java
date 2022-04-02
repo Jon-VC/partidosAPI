@@ -5,6 +5,7 @@ import uol.compass.partidosAPI.model.constants.Gender;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,7 +25,7 @@ public class Associate {
 	@Column(nullable = false)
 	private PoliticalOffice politicalOffice;
 	@Column(nullable = false)
-	private int birthDate;
+	private Date birthDate;
 	@Column(nullable = false)
 	private Gender gender;
 	

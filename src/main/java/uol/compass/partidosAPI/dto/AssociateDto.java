@@ -5,6 +5,7 @@ import uol.compass.partidosAPI.model.constants.Gender;
 import uol.compass.partidosAPI.model.Party;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ public class AssociateDto {
 	private String name;
 	private List<Party> party;
 	private PoliticalOffice politicalOffice;
-	private int birthDate;
+	private Date birthDate;
 	private Gender gender;
 	
 }

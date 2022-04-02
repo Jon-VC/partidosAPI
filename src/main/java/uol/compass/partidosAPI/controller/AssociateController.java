@@ -1,6 +1,7 @@
 package uol.compass.partidosAPI.controller;
 
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import uol.compass.partidosAPI.dto.AssociateDto;
 import uol.compass.partidosAPI.dto.AssociateFormDto;
@@ -33,20 +34,20 @@ public class AssociateController {
 	@PostMapping(path = "/{id}/partido/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeAssociados", allEntries = true)
-	public ResponseEntity<String> registerPartido(@PathVariable("id") Long id, @PathVariable("partido") Long partido) {
+	public ResponseEntity<String> registerParty(@PathVariable("id") Long id, @PathVariable("partido") Long partido) {
 		AssociateDto associate = this.associateService.registerParty(id, partido);
 		return ResponseEntity.status(HttpStatus.CREATED).body("");
 	}
 
 	@GetMapping
-	@CacheEvict(value = "listaDeAssociados", allEntries = true)
+	@Cacheable(value = "listaDeAssociados")
 	public ResponseEntity<Page<AssociateDto>> findAll(@PageableDefault Pageable page) {
 		Page<AssociateDto> associate = this.associateService.findAll(page);
 		return ResponseEntity.ok(associate);
 	}
 	
 	@GetMapping(path = "/{id}")
-	@CacheEvict(value = "listaDeAssociados", allEntries = true)
+	@Cacheable(value = "listaDeAssociados")
 	public ResponseEntity<AssociateDto> search(@PathVariable Long id) {
 		AssociateDto associate = this.associateService.search(id);
 		return ResponseEntity.ok(associate);

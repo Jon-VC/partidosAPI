@@ -4,6 +4,7 @@ import uol.compass.partidosAPI.model.constants.Ideology;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -22,7 +23,7 @@ public class Party {
 	@Column(nullable = false)
 	private Ideology ideology;
 	@Column(nullable = false)
-	private int foundationDate;
+	private Date foundationDate;
 	@OneToMany(mappedBy = "party")
 	private List<Associate> associates;
 

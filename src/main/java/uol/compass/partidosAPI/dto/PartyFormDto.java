@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Data
 public class PartyFormDto {
@@ -16,6 +17,6 @@ public class PartyFormDto {
 	@NotNull(message = "ideology is required")
 	private Ideology ideology;
 	@NotNull(message = "foundationDate is required")
-	private int foundationDate;
+	private Date foundationDate;
 	
 }
