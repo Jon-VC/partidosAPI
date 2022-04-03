@@ -1,5 +1,6 @@
 package uol.compass.partidosAPI.dto;
 
+import lombok.NoArgsConstructor;
 import uol.compass.partidosAPI.model.constants.PoliticalOffice;
 import uol.compass.partidosAPI.model.constants.Gender;
 import uol.compass.partidosAPI.model.Party;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class AssociateFormDto {
 
 	@NotEmpty(message = "name is required")

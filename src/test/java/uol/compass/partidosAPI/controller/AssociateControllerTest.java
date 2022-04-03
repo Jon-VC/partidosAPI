@@ -13,43 +13,48 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import uol.compass.partidosAPI.exceptions.BusinessException;
+import uol.compass.partidosAPI.model.Associate;
 import uol.compass.partidosAPI.model.Party;
+import uol.compass.partidosAPI.model.constants.Gender;
 import uol.compass.partidosAPI.model.constants.Ideology;
-import uol.compass.partidosAPI.repository.PartyRepository;
-import uol.compass.partidosAPI.service.PartyServiceImpl;
+import uol.compass.partidosAPI.model.constants.PoliticalOffice;
+import uol.compass.partidosAPI.repository.AssociateRepository;
+import uol.compass.partidosAPI.service.AssociateServiceImpl;
 
 import java.util.*;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(PartyControllerTest.class)
-class PartyControllerTest {
+class AssociateControllerTest {
+
     @Autowired
     MockMvc mockMvc;
     @Autowired
     ObjectMapper mapper;
 
     @MockBean
-    PartyRepository partyRepository;
+    AssociateRepository associateRepository;
     @MockBean
-    PartyServiceImpl partyService;
+    AssociateServiceImpl associateService;
 
-    Party RECORD_1 = new Party("Progressistas", "PP", Ideology.CENTRO, new Date(1995, 11, 16));
-    Party RECORD_2 = new Party("Movimento Democrático Brasileiro", "MDB", Ideology.DIREITA, new Date(1981, 06, 30));
-    Party RECORD_3 = new Party("Partido da Social Democracia Brasileira", "PSDB", Ideology.CENTRO, new Date(1988, 06, 25));
+    Associate RECORD_1 = new Associate("Gilberto Nascimento JR", PoliticalOffice.VEREADOR, new Date(1967,10, 25), Gender.MASCULINO);
+    Associate RECORD_2 = new Associate("Robert Willians", PoliticalOffice.PREFEITO, new Date(1983, 07, 12), Gender.MASCULINO);
+    Associate RECORD_3 = new Associate("Maria Dolores da Cunha", PoliticalOffice.DEPUTADO_ESTADUAL, new Date(1999, 05, 19), Gender.FEMININO);
 
     @Test
-    public void getAllParties_success() throws Exception {
-        List<Party> records = new ArrayList<>(Arrays.asList(RECORD_1, RECORD_2, RECORD_3));
+    public void getAllAssociates_success() throws Exception {
+        List<Associate> records = new ArrayList<>(Arrays.asList(RECORD_1, RECORD_2, RECORD_3));
 
-        Mockito.when(partyRepository.findAll()).thenReturn(records);
+        Mockito.when(associateRepository.findAll()).thenReturn(records);
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/partidos")
+                        .get("/associados")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) jsonPath("$", hasSize(3)))
@@ -57,8 +62,8 @@ class PartyControllerTest {
     }
 
     @Test
-    public void getPartyById_success() throws Exception {
-        Mockito.when(partyRepository.findById(RECORD_1.getId())).thenReturn(Optional.of(RECORD_1));
+    public void getAssociateById_success() throws Exception {
+        Mockito.when(associateRepository.findById(RECORD_1.getId())).thenReturn(Optional.of(RECORD_1));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/partidos/1")
@@ -69,12 +74,11 @@ class PartyControllerTest {
     }
 
     @Test
-    public void createPartyRecord_success() throws Exception {
-        Party record = new Party("Partido dos Trabalhadores", "PT", Ideology.ESQUERDA, new Date(1981, 06, 30));
+    public void createAssociateRecord_success() throws Exception {
+        Associate record = new Associate("Danilo Schudeller", PoliticalOffice.DEPUTADO_FEDERAL, new Date(1943,02, 28), Gender.MASCULINO);
+        Mockito.when(associateRepository.save(record)).thenReturn(record);
 
-        Mockito.when(partyRepository.save(record)).thenReturn(record);
-
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/partidos")
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/associados")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(record));
@@ -86,10 +90,10 @@ class PartyControllerTest {
     }
 
     @Test
-    public void updatePartyRecord_nullId() throws Exception {
+    public void updateAssociateRecord_nullId() throws Exception {
         Party updatedRecord = new Party("Partido dos Trabalhadores", "PT", Ideology.ESQUERDA, new Date(1981, 06, 30));
 
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/partidos")
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/associados")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(updatedRecord));
@@ -106,12 +110,12 @@ class PartyControllerTest {
     }
 
     @Test
-    public void updatePartyRecord_recordNotFound() throws Exception {
+    public void updateAssociateRecord_recordNotFound() throws Exception {
         Party updatedRecord = new Party("Partido dos Trabalhadores", "PT", Ideology.ESQUERDA, new Date(1981, 06, 30));
 
-        Mockito.when(partyRepository.findById(updatedRecord.getId())).thenReturn(null);
+        Mockito.when(associateRepository.findById(updatedRecord.getId())).thenReturn(null);
 
-        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/partidos")
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/associados")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(this.mapper.writeValueAsString(updatedRecord));

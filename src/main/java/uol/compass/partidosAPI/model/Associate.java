@@ -28,5 +28,11 @@ public class Associate {
 	private Date birthDate;
 	@Column(nullable = false)
 	private Gender gender;
-	
+
+	public Associate(String name, PoliticalOffice politicalOffice, Date birthDate, Gender gender) {
+		this.name = name;
+		this.politicalOffice = politicalOffice;
+		this.birthDate = birthDate;
+		this.gender = gender;
+	}
 }
