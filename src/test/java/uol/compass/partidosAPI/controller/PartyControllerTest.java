@@ -82,7 +82,7 @@ class PartyControllerTest {
         mockMvc.perform(mockRequest)
                 .andExpect(status().isOk())
                 .andExpect((ResultMatcher) jsonPath("$", notNullValue()))
-                .andExpect((ResultMatcher) jsonPath("$.name", is("John Doe")));
+                .andExpect((ResultMatcher) jsonPath("$.name", is("Partido Novo")));
     }
 
     @Test
@@ -102,7 +102,7 @@ class PartyControllerTest {
                     Assertions.fail();
                 })
                 .andExpect(result ->
-                        Assertions.assertEquals("PatientRecord or ID must not be null!", result.getResolvedException().getMessage()));
+                        Assertions.assertEquals("Party or ID must not be null!", result.getResolvedException().getMessage()));
     }
 
     @Test
@@ -121,6 +121,6 @@ class PartyControllerTest {
                 .andExpect(result ->
                         Assertions.assertTrue(result.getResolvedException() instanceof BusinessException))
                 .andExpect(result ->
-                        Assertions.assertEquals("Patient with ID 5 does not exist.", result.getResolvedException().getMessage()));
+                        Assertions.assertEquals("Party with ID 5 does not exist.", result.getResolvedException().getMessage()));
     }
 }

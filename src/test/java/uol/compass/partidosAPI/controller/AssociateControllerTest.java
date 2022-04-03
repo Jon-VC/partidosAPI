@@ -14,9 +14,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import uol.compass.partidosAPI.exceptions.BusinessException;
 import uol.compass.partidosAPI.model.Associate;
-import uol.compass.partidosAPI.model.Party;
 import uol.compass.partidosAPI.model.constants.Gender;
-import uol.compass.partidosAPI.model.constants.Ideology;
 import uol.compass.partidosAPI.model.constants.PoliticalOffice;
 import uol.compass.partidosAPI.repository.AssociateRepository;
 import uol.compass.partidosAPI.service.AssociateServiceImpl;
@@ -26,7 +24,6 @@ import java.util.*;
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -91,7 +88,7 @@ class AssociateControllerTest {
 
     @Test
     public void updateAssociateRecord_nullId() throws Exception {
-        Party updatedRecord = new Party("Partido dos Trabalhadores", "PT", Ideology.ESQUERDA, new Date(1981, 06, 30));
+        Associate updatedRecord = new Associate("Danilo Schudeller", PoliticalOffice.DEPUTADO_FEDERAL, new Date(1943,02, 28), Gender.MASCULINO);
 
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/associados")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -106,12 +103,12 @@ class AssociateControllerTest {
                     Assertions.fail();
                 })
                 .andExpect(result ->
-                        Assertions.assertEquals("PatientRecord or ID must not be null!", result.getResolvedException().getMessage()));
+                        Assertions.assertEquals("Associate or ID must not be null!", result.getResolvedException().getMessage()));
     }
 
     @Test
     public void updateAssociateRecord_recordNotFound() throws Exception {
-        Party updatedRecord = new Party("Partido dos Trabalhadores", "PT", Ideology.ESQUERDA, new Date(1981, 06, 30));
+        Associate updatedRecord = new Associate("Danilo Schudeller", PoliticalOffice.DEPUTADO_FEDERAL, new Date(1943,02, 28), Gender.MASCULINO);
 
         Mockito.when(associateRepository.findById(updatedRecord.getId())).thenReturn(null);
 
@@ -125,6 +122,6 @@ class AssociateControllerTest {
                 .andExpect(result ->
                         Assertions.assertTrue(result.getResolvedException() instanceof BusinessException))
                 .andExpect(result ->
-                        Assertions.assertEquals("Patient with ID 5 does not exist.", result.getResolvedException().getMessage()));
+                        Assertions.assertEquals("Associate with ID 5 does not exist.", result.getResolvedException().getMessage()));
     }
 }
