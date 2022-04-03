@@ -7,7 +7,6 @@ import uol.compass.partidosAPI.model.constants.Ideology;
 
 import java.util.Date;
 
-@NoArgsConstructor
 @AllArgsConstructor
 public class PartyBuilder {
 

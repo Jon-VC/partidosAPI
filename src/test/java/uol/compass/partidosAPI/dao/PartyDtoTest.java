@@ -1,6 +1,7 @@
 package uol.compass.partidosAPI.dao;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Page;
@@ -60,17 +61,18 @@ class PartyDtoTest {
 	@Test
 	void saveParty() {
 
-		PartyDto party = new PartyBuilder()
+		new PartyBuilder()
 				.withName("Progressistas")
 				.withAcronym("PP")
 				.withIdeology(Ideology.CENTRO)
-				.withFoundationDate(new Date(1995, 11, 16))
+				.withFoundationDate(new Date(1995, 11, 16));
+		PartyDto party = PartyBuilder
 				.create();
 	
 		party = partyService.save(party);
 		
 		Party salvo = partyService.findById(party.getId());
-		Assert.assertNotNull(salvo);
+		Assertions.assertNotNull(salvo);
 	}
 
 	
