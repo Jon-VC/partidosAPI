@@ -4,7 +4,6 @@ import uol.compass.partidosAPI.model.constants.Ideology;
 import uol.compass.partidosAPI.model.Associate;
 import lombok.Data;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 
